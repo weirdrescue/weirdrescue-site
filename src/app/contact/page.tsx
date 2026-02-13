@@ -38,14 +38,29 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     <div className="space-y-12">
       {/* Header */}
       <section className="surface p-8 sm:p-12">
-        <p className="text-sm font-semibold text-white/70">Contact</p>
-        <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight">
-          Let’s talk.
-        </h1>
-        <p className="mt-4 text-white/80 text-lg">
-          Questions? Ideas? Want to help? Reach out — we’d love to hear from you.
-        </p>
-      </section>
+  <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+    <div>
+      <p className="text-sm font-semibold text-white/70">Contact</p>
+      <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight">
+        Let’s talk.
+      </h1>
+      <p className="mt-4 text-white/80 text-lg">
+        Questions? Ideas? Want to help? Reach out — we’d love to hear from you.
+      </p>
+    </div>
+
+    <div className="flex justify-center lg:justify-end">
+      <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg">
+        <img
+          src="/brand/logo.png"
+          alt="Weird Rescue logo"
+          className="h-28 w-28 sm:h-32 sm:w-32 object-contain"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Form + Info */}
       <section className="grid gap-10 lg:grid-cols-2">
