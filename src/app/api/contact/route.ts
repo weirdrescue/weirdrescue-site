@@ -1,18 +1,15 @@
-import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 export async function POST(req: Request) {
   try {
     const apiKey = process.env.RESEND_API_KEY;
-
     if (!apiKey) {
       return NextResponse.json(
         { success: false, error: "Missing RESEND_API_KEY" },
         { status: 500 }
       );
     }
-
-    const resend = new Resend(apiKey);
 
     const formData = await req.formData();
     const name = String(formData.get("name") || "").trim();
@@ -26,6 +23,8 @@ export async function POST(req: Request) {
       );
     }
 
+    const resend = new Resend(apiKey);
+
     const result = await resend.emails.send({
       from: "Weird Rescue <hello@weirdrescue.org>",
       to: ["hello@weirdrescue.org"],
@@ -33,36 +32,6 @@ export async function POST(req: Request) {
       replyTo: email,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
     });
-
-    if (result.error) {
-      return NextResponse.json(
-        { success: false, error: result.error.message },
-        { status: result.error.statusCode || 500 }
-      );
-    }
-
-    return NextResponse.json({ success: true, id: result.data?.id });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { success: false, error: "Email failed" },
-      { status: 500 }
-    );
-  }
-}
-
-
-    const result = await resend.emails.send({
-      // NOTE: this can be changed to hello@weirdrescue.org after domain verification
-    from: "Weird Rescue <hello@weirdrescue.org>",
-to: ["hello@weirdrescue.org"],
-
-      subject: `New message from ${name}`,
-      replyTo: email,
-      text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-    });
-
-    console.log("📨 Resend result:", result);
 
     if (result.error) {
       return NextResponse.json(
