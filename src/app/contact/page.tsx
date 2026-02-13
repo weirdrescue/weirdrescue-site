@@ -49,15 +49,14 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       </p>
     </div>
 
-    <div className="flex justify-center lg:justify-end">
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-lg">
-        <img
-          src="/brand/logo.png"
-          alt="Weird Rescue logo"
-          className="h-28 w-28 sm:h-32 sm:w-32 object-contain"
-        />
-      </div>
-    </div>
+   <div className="flex justify-center lg:justify-end">
+  <img
+    src="/brand/logo.png"
+    alt="Weird Rescue logo"
+    className="h-40 sm:h-52 lg:h-64 w-auto object-contain"
+  />
+</div>
+
   </div>
 </section>
 
