@@ -1,65 +1,247 @@
 import Image from "next/image";
+import { getAllAnimals } from "@/lib/animals";
+import AnimalCard from "@/components/AnimalCard";
 
-export default function Home() {
+
+export default function Home() {const featured = getAllAnimals().filter((a) => a.featured).slice(0, 6);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="space-y-10">
+      {/* HERO */}
+      <section className="surface px-7 py-10 sm:px-10 sm:py-12">
+        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+          {/* Left: mission + CTAs */}
+          <div className="max-w-xl">
+            <p className="text-sm font-semibold tracking-wide text-white/80">
+              501(c)(3) • Los Angeles, CA
+            </p>
+
+            <h1 className="mt-3 text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.05]">
+              Rescue, but make it weird.
+            </h1>
+
+            <p className="mt-5 text-lg sm:text-xl text-white/80">
+              We save overlooked dogs and cats and match them with the right humans — with
+              great care, honest support, and a little chaos (the cute kind).
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="/adopt"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-[var(--wr-mint)] text-black
+                           hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              >
+                Meet adoptables
+              </a>
+
+             <a
+  href="/foster"
+  className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+             bg-[var(--wr-sky)] text-black
+             hover:brightness-105 active:scale-[0.98]
+             transition shadow-md"
+>
+  Become a foster
+</a>
+
+
+              <a
+                href="/donate"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-[var(--wr-sun)] text-black
+                           hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              >
+                Donate
+              </a>
+            </div>
+
+            {/* quick trust points */}
+            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">Based in behavior</p>
+                <p className="mt-1 text-xs text-white/70">Positive reinforcement and behavior shaping.</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">Foster-led</p>
+                <p className="mt-1 text-xs text-white/70">Home-based care & matchmaking.</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">Supportive</p>
+                <p className="mt-1 text-xs text-white/70">Real help after adoption.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: the weirdness */}
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+              <Image
+                src="/hero/weirdfamily.png"
+                alt="Weird Rescue adoptable family portrait"
+                width={1200}
+                height={900}
+                priority
+                className="h-auto w-full object-cover"
+              />
+            </div>
+            <p className="mt-3 text-xs text-white/60">
+  Yes, this image was made with AI. Our animals refused to rock the denim.
+</p>
+
+
+            {/* subtle modern accent glow (keeps it clean) */}
+            <div className="pointer-events-none absolute -inset-6 -z-10 blur-3xl opacity-35">
+              <div className="absolute left-8 top-8 h-44 w-44 rounded-full bg-[var(--wr-sky)]" />
+              <div className="absolute right-10 bottom-10 h-48 w-48 rounded-full bg-[var(--wr-mint)]" />
+            </div>
+
+          
+          </div>
+        </div>
+      </section>
+      <div className="h-px w-full bg-white/10" />
+
+{/* FEATURED ADOPTABLES */}
+<section className="space-y-4 pt-2">
+  <div className="flex items-end justify-between gap-4">
+    <div>
+      <h2 className="mt-1 text-2xl font-extrabold tracking-tight">
+        Meet a few of our favorites
+      </h2>
+    </div>
+
+    <a
+      href="/adopt"
+      className="text-sm font-semibold text-mint hover:opacity-90 transition"
+    >
+      View all →
+    </a>
+  </div>
+
+  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {featured.map((animal) => (
+      <AnimalCard key={animal.slug} animal={animal} />
+    ))}
+  </div>
+</section>
+{/* HOW IT WORKS */}
+<section className="surface p-7 sm:p-10">
+  <div className="max-w-3xl">
+    <p className="text-sm font-semibold text-white/70">How it works</p>
+    <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+      Rescue → Foster → Match
+    </h2>
+    <p className="mt-3 text-white/75">
+      We keep it simple: get them safe, get them supported, then find the right
+      forever home.
+    </p>
+  </div>
+
+  <div className="mt-8 grid gap-4 sm:grid-cols-3">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <p className="text-sm font-semibold text-mint">1) Rescue</p>
+      <p className="mt-2 text-sm text-white/75">
+        We take in animals who need a second chance, get them healthy, and learn as much as we can about them.
+      </p>
+    </div>
+
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <p className="text-sm font-semibold text-sun">2) Foster</p>
+      <p className="mt-2 text-sm text-white/75">
+        Fosters provide the safe landing, both short and longer term. We are there for you the whole time so you can be there for them.
+      </p>
+    </div>
+
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <p className="text-sm font-semibold text-coral">3) Match</p>
+      <p className="mt-2 text-sm text-white/75">
+        We match pets to people thoughtfully — then stay available for support after adoption.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+      {/* TWO BIG PATHS (simple + purposeful) */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        <a href="/adopt" className="surface p-7 hover:bg-white/10 transition">
+          <p className="text-sm font-semibold text-mint">Adopt</p>
+          <h2 className="mt-2 text-2xl font-bold">Meet your match</h2>
+          <p className="mt-2 text-white/75">
+            Browse adoptables with photos, videos, and a Petfinder link.
+          </p>
+        </a>
+
+        <a href="/foster" className="surface p-7 hover:bg-white/10 transition">
+          <p className="text-sm font-semibold text-sun">Foster</p>
+          <h2 className="mt-2 text-2xl font-bold">Be the safe place</h2>
+          <p className="mt-2 text-white/75">
+            Short-term fosters save lives. We’ll support you the whole way.
+          </p>
+        </a>
+      </section>
+
+      {/* LINKTREE / SOCIAL */}
+      <section className="surface p-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-sm font-semibold text-coral">Start here</p>
+          <h2 className="mt-1 text-2xl font-bold">Find us everywhere</h2>
+          <p className="mt-2 text-white/75">
+            Instagram, wishlist, ways to help, and updates.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        <a
+          href="https://linktr.ee/weirdrescue"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold
+                     bg-white/10 text-white border border-white/10
+                     hover:bg-white/15 active:scale-[0.98] transition"
+        >
+          Open Linktree
+        </a>
+      </section>
+      {/* FINAL CTA */}
+<section className="surface p-7 sm:p-10 mb-2">
+  <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <div className="max-w-2xl">
+      <p className="text-sm font-semibold text-white/70">Want to help right now?</p>
+      <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+        Fosters save lives. Donations power the weird.
+      </h2>
+      <p className="mt-3 text-white/75">
+        If you’ve got space in your home or room in your budget, you can make an
+        immediate impact.
+      </p>
     </div>
+
+    <div className="flex flex-wrap gap-3">
+      <a
+        href="/foster"
+        className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                   bg-[var(--wr-mint)] text-black
+                   hover:brightness-105 active:scale-[0.98] transition shadow-md"
+      >
+        Foster with us
+      </a>
+
+      <a
+        href="/donate"
+        className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                   bg-[var(--wr-sun)] text-black
+                   hover:brightness-105 active:scale-[0.98] transition shadow-md"
+      >
+        Donate
+      </a>
+    </div>
+  </div>
+</section>
+
+    </div>
+    
   );
+  
 }
+

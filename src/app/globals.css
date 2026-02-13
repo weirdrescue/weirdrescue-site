@@ -1,26 +1,48 @@
 @import "tailwindcss";
 
+/* ===== Weird Rescue Brand System ===== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --wr-black: #0e2a2f;   /* dark teal */
+  --wr-white: #ffffff;
+
+  --wr-mint:  #7ee6d3;
+  --wr-sky:   #86cfff;
+  --wr-coral: #D77F6E;
+  --wr-sun:   #ffe08a;
+
+  --wr-surface: rgba(255, 255, 255, 0.06);
+  --wr-border: rgba(255, 255, 255, 0.14);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ===== Base Layout ===== */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  color: var(--wr-white);
+
+  /* Subtle space glow */
+    background:
+    radial-gradient(900px 500px at 20% -10%, rgba(134, 207, 255, 0.18), transparent 60%),
+    radial-gradient(800px 400px at 80% 0%, rgba(126, 230, 211, 0.16), transparent 55%),
+    radial-gradient(700px 600px at 50% 110%, rgba(255, 224, 138, 0.12), transparent 55%),
+    var(--wr-black);
 }
+
+/* ===== Modern Glass Surface Utility ===== */
+.surface {
+  background: var(--wr-surface);
+  border: 1px solid var(--wr-border);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+}
+
+/* ===== Accent Utilities ===== */
+.text-mint { color: var(--wr-mint); }
+.text-sky { color: var(--wr-sky); }
+.text-coral { color: var(--wr-coral); }
+.text-sun { color: var(--wr-sun); }
+
+.bg-mint { background: var(--wr-mint); }
+.bg-sky { background: var(--wr-sky); }
+.bg-coral { background: var(--wr-coral); }
+.bg-sun { background: var(--wr-sun); }
