@@ -26,7 +26,7 @@ export async function POST(req: Request) {
 to: ["hello@weirdrescue.org"],
 
       subject: `New message from ${name}`,
-      reply_to: email,
+      replyTo: email,
       text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
     });
 
