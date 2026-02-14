@@ -8,6 +8,8 @@ const links = [
   { href: "/foster", label: "Foster" },
   { href: "/volunteer", label: "Volunteer" },
   { href: "/contact", label: "Contact" },
+  { href: "/about", label: "About" },
+
 ];
 
 export default function HeaderNav() {
