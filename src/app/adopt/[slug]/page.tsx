@@ -75,25 +75,48 @@ export default async function AnimalProfilePage({
             <p className="mt-1 text-gray-500">{animal.location}</p>
           ) : null}
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            {animal.petfinderUrl ? (
-              <a
-                href={animal.petfinderUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-gray-800 transition"
-              >
-                View on Petfinder
-              </a>
-            ) : null}
+         <div className="mt-6 flex flex-col gap-3">
+  <div className="flex flex-wrap gap-3">
+    {animal.petfinderUrl ? (
+      <a
+        href={animal.petfinderUrl}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                   bg-[var(--wr-sky)] text-black
+                   hover:brightness-105 active:scale-[0.98] transition shadow-md"
+      >
+        View on Petfinder →
+      </a>
+    ) : null}
 
-            <a
-              href="/contact"
-              className="inline-flex items-center rounded-lg border px-4 py-2 text-sm font-semibold hover:bg-gray-50 transition"
-            >
-              Ask about {animal.name}
-            </a>
-          </div>
+    <a
+      href="/contact"
+      className="inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-semibold
+                 bg-[var(--wr-sky)] text-black
+                 hover:brightness-105 active:scale-[0.98] transition shadow-md"
+    >
+      Ask about {animal.name} →
+    </a>
+  </div>
+
+  {/* Apply Button */}
+  <a
+    href={
+      animal.species?.toLowerCase() === "cat"
+        ? "https://new.shelterluv.com/matchme/adopt/WRD/Cat"
+        : "https://new.shelterluv.com/matchme/adopt/WRD/Dog"
+    }
+    target="_blank"
+    rel="noreferrer"
+    className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold
+               bg-[var(--wr-mint)] text-black
+               hover:brightness-105 active:scale-[0.98] transition shadow-lg"
+  >
+    Apply to Adopt {animal.name} →
+  </a>
+</div>
+
 
           <div className="prose prose-gray mt-8 max-w-none">
             <ReactMarkdown>{animal.content}</ReactMarkdown>
