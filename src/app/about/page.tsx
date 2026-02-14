@@ -126,7 +126,7 @@ export default function AboutPage() {
             <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/80">
               <p className="font-semibold text-white">Our vibe</p>
               <p className="mt-2">
-                Clean, modern care — with a little chaos (the cute kind). We love
+                Care, compassion, and chaos. We love
                 the weird ones. We are the weird ones.
               </p>
             </div>
