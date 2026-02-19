@@ -88,10 +88,10 @@ export default function AboutPage() {
   return (
     <div className="space-y-14">
       {/* Hero */}
-      <section className="surface p-8 sm:p-12">
+      <section className="surface p-8 sm:p-12 overflow-hidden">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
           {/* Left */}
-          <div className="max-w-2xl">
+          <div className="max-w-2xl min-w-0">
             <p className="text-sm font-semibold text-white/70">About</p>
 
             <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight">
@@ -133,8 +133,8 @@ export default function AboutPage() {
           </div>
 
           {/* Right: Filmstrips (smaller + casual offset) */}
-          <div className="flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-md">
+          <div className="flex justify-center lg:justify-end min-w-0">
+            <div className="relative w-full max-w-xs sm:max-w-md">
               {/* subtle glow accents */}
               <div className="absolute -top-6 -left-10 h-20 w-20 rounded-full bg-[var(--wr-sky)]/20 blur-3xl" />
               <div className="absolute -bottom-10 -right-10 h-24 w-24 rounded-full bg-[var(--wr-mint)]/20 blur-3xl" />
