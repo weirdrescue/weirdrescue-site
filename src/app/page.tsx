@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { getAllAnimals } from "@/lib/animals";
 import AnimalCard from "@/components/AnimalCard";
+import EmailSignup from "@/components/EmailSignup";
 
 
 export default function Home() {const featured = getAllAnimals().filter((a) => a.featured).slice(0, 6);
@@ -238,7 +239,9 @@ export default function Home() {const featured = getAllAnimals().filter((a) => a
     </div>
   </div>
 </section>
-
+<section className="mt-14">
+  <EmailSignup />
+</section>
     </div>
     
   );

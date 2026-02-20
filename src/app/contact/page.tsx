@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import EmailSignup from "@/components/EmailSignup";
 
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -158,6 +159,13 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
           </div>
         </div>
       </section>
+      <section className="mt-14">
+  <EmailSignup
+    eyebrow="Updates"
+    title="Want rescue updates on your favorite weirdos?"
+    subtitle="Get adoption stories, behind-the-scenes, and ways to help — straight from the Weird Rescue universe."
+  />
+</section>
     </div>
   );
 }
