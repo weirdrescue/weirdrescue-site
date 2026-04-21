@@ -2,7 +2,7 @@
 slug: rocky
 name: Rocky
 species: Cat
-status: Available
+status: Adopted
 age: Kitten
 sex: Male
 location: Los Angeles, CA
