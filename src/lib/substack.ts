@@ -10,6 +10,14 @@ const SUBSTACK_FEED_URL = "https://stayweirdandrescue.substack.com/feed";
 function decodeXmlEntities(text: string) {
   return text
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/&#(\d+);/g, (_, code) => {
+      const value = Number.parseInt(code, 10);
+      return Number.isNaN(value) ? _ : String.fromCodePoint(value);
+    })
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => {
+      const value = Number.parseInt(code, 16);
+      return Number.isNaN(value) ? _ : String.fromCodePoint(value);
+    })
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
