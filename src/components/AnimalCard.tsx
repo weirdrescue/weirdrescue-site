@@ -13,7 +13,7 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
             src={animal.image}
             alt={animal.name}
             fill
-            className="object-cover group-hover:scale-[1.02] transition"
+            className="object-cover object-top group-hover:scale-[1.02] transition"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : null}
