@@ -6,9 +6,6 @@ export default async function AdoptPage() {
     (a) => (a.status || "").toLowerCase() === "available"
   );
 
-  const featured = animals.filter((a) => a.featured);
-  const others = animals.filter((a) => !a.featured);
-
   return (
     <div className="space-y-10">
       {/* Header */}
@@ -37,26 +34,6 @@ export default async function AdoptPage() {
         </div>
       </section>
 
-      {/* Featured */}
-      {featured.length ? (
-        <section className="space-y-4">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold text-white/70">Featured</p>
-              <h2 className="mt-1 text-2xl font-extrabold tracking-tight">
-                Our current headliners
-              </h2>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((animal) => (
-              <AnimalCard key={animal.slug} animal={animal} />
-            ))}
-          </div>
-        </section>
-      ) : null}
-
       {/* All available */}
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
@@ -71,7 +48,7 @@ export default async function AdoptPage() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {others.map((animal) => (
+          {animals.map((animal) => (
             <AnimalCard key={animal.slug} animal={animal} />
           ))}
         </div>
