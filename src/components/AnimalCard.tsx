@@ -3,7 +3,7 @@ import { Animal } from "@/lib/animals";
 
 export default function AnimalCard({ animal }: { animal: Animal }) {
   const objectPosition =
-    animal.name.toLowerCase() === "kai" ? "center 0%" : "center top";
+    animal.name.toLowerCase() === "kai" ? "center 100%" : "center top";
 
   return (
     <a
