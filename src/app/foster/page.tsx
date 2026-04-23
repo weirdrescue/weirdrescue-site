@@ -152,8 +152,12 @@ export default function FosterPage() {
           <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p className="font-semibold">How long is a foster?</p>
             <p className="mt-2 text-white/75 text-sm">
-              It depends — sometimes a few weeks, sometimes longer. We’ll be transparent
-              and work with your schedule.
+              It doesn’t always take this long to find the right home, but for our
+              longer-term fosters we usually ask for a 3 month commitment. If that feels
+              like too much right now, we still want to hear from you. Our “foster
+              flings” can be anywhere from a few days to a few weeks. Just let us know
+              what kind of availability you have, and keep your status updated in the
+              portal so we can make the best match.
             </p>
           </div>
 
