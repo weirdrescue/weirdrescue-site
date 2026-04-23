@@ -1,3 +1,4 @@
+import Image from "next/image";
 import SubstackFeed from "@/components/SubstackFeed";
 import { getLatestSubstackPosts } from "@/lib/substack";
 
@@ -70,8 +71,20 @@ export default async function NewsletterPage() {
             </a>
           </div>
 
-          <div className="relative rounded-3xl border border-white/10 bg-white/5 p-8 flex items-center justify-center text-center">
-            <p className="text-xl font-semibold text-white/70">Stay Weird & Rescue</p>
+          <div className="relative min-h-[320px] overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+            {featuredPost?.image ? (
+              <Image
+                src={featuredPost.image}
+                alt={featuredPost.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            ) : (
+              <div className="flex h-full min-h-[320px] items-center justify-center p-8 text-center">
+                <p className="text-xl font-semibold text-white/70">Stay Weird & Rescue</p>
+              </div>
+            )}
 
             <div className="pointer-events-none absolute inset-0 -z-10 blur-3xl opacity-30">
               <div className="absolute left-10 top-10 h-32 w-32 rounded-full bg-[var(--wr-sky)]" />

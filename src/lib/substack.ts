@@ -3,6 +3,7 @@ export type SubstackPost = {
   link: string;
   publishedAt: string;
   description: string;
+  image?: string;
 };
 
 const SUBSTACK_FEED_URL = "https://stayweirdandrescue.substack.com/feed";
@@ -38,6 +39,22 @@ function readTag(block: string, tagName: string) {
   return match?.[1]?.trim() ?? "";
 }
 
+function readAttribute(block: string, tagName: string, attributeName: string) {
+  const tagMatch = block.match(new RegExp(`<${tagName}\\b([^>]*)>`, "i"));
+  const attributes = tagMatch?.[1] ?? "";
+  const attributeMatch = attributes.match(
+    new RegExp(`${attributeName}=["']([^"']+)["']`, "i")
+  );
+
+  return attributeMatch?.[1]?.trim() ?? "";
+}
+
+function findFirstImageUrl(html: string) {
+  const decoded = decodeXmlEntities(html);
+  const imageMatch = decoded.match(/<img\b[^>]*\bsrc=["']([^"']+)["']/i);
+  return imageMatch?.[1]?.trim() ?? "";
+}
+
 function parseFeed(xml: string): SubstackPost[] {
   const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
 
@@ -46,15 +63,21 @@ function parseFeed(xml: string): SubstackPost[] {
       const title = stripHtml(readTag(block, "title"));
       const link = decodeXmlEntities(readTag(block, "link"));
       const publishedAt = readTag(block, "pubDate");
+      const content = readTag(block, "content:encoded");
       const description = stripHtml(
-        readTag(block, "content:encoded") || readTag(block, "description")
+        content || readTag(block, "description")
       );
+      const image =
+        decodeXmlEntities(readAttribute(block, "enclosure", "url")) ||
+        decodeXmlEntities(readAttribute(block, "media:content", "url")) ||
+        findFirstImageUrl(content || readTag(block, "description"));
 
       return {
         title,
         link,
         publishedAt,
         description,
+        image,
       } satisfies SubstackPost;
     })
     .filter((post) => post.title && post.link)
