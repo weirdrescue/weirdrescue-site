@@ -27,8 +27,8 @@ export default async function AdoptPage() {
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
-                         bg-[var(--wr-sky)] text-black
-                         hover:brightness-105 active:scale-[0.98] transition shadow-md"
+                         bg-white/10 text-white border border-white/10
+                         hover:bg-white/15 active:scale-[0.98] transition"
             >
               View on Petfinder →
             </a>
