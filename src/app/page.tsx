@@ -3,8 +3,8 @@ import { getAllAnimals } from "@/lib/animals";
 import AnimalCard from "@/components/AnimalCard";
 import EmailSignup from "@/components/EmailSignup";
 
-export default function Home() {
-  const featured = getAllAnimals().filter((a) => a.featured).slice(0, 6);
+export default async function Home() {
+  const featured = (await getAllAnimals()).filter((a) => a.featured).slice(0, 6);
 
   return (
     <div className="space-y-10">
@@ -204,7 +204,7 @@ export default function Home() {
           <p className="text-sm font-semibold text-mint">Adopt</p>
           <h2 className="mt-2 text-2xl font-bold">Meet your match</h2>
           <p className="mt-2 text-white/75">
-            Browse adoptables with photos, videos, and a Petfinder link.
+            Browse adoptables with photos, stories, and live listings from Adopt a Pet.
           </p>
         </a>
 

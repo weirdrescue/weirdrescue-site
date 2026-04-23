@@ -1,8 +1,8 @@
 import AnimalCard from "@/components/AnimalCard";
 import { getAllAnimals } from "@/lib/animals";
 
-export default function AdoptPage() {
-  const animals = getAllAnimals().filter(
+export default async function AdoptPage() {
+  const animals = (await getAllAnimals()).filter(
     (a) => (a.status || "").toLowerCase() === "available"
   );
 
@@ -20,19 +20,19 @@ export default function AdoptPage() {
               Adoptable Weirdos
             </h1>
             <p className="mt-3 text-white/80">
-              Tap a profile for photos + video, more details, and the Petfinder link.
+              Tap a profile for photos, details, and the latest live info from Adopt a Pet.
             </p>
           </div>
 
           <a
-            href="https://www.petfinder.com/member/us/ca/studio-city/weird-rescue-ca3299/"
+            href="https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
                        bg-white/10 text-white border border-white/10
                        hover:bg-white/15 active:scale-[0.98] transition"
           >
-            View on Petfinder →
+            View rescue on Adopt a Pet →
           </a>
         </div>
       </section>
