@@ -159,8 +159,12 @@ function buildAnimalSlug(name: string, id: string) {
   return `${slugify(name)}-${id}`;
 }
 
-function normalizeAdoptAPetImageUrl(url: string | null | undefined) {
+function normalizeAdoptAPetImageUrl(
+  url: string | null | undefined,
+  useOriginal: boolean
+) {
   if (!url) return "";
+  if (!useOriginal) return url;
 
   const match = url.match(
     /^https:\/\/media\.adoptapet\.com\/image\/upload\/.+\/([^/?#]+)$/
@@ -238,8 +242,9 @@ function mergeAnimalSummaryWithDetail(summary: Animal, detail: Animal | null): A
 function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   const id = String(pet.pet_id || "");
   const name = pet.pet_name || "Adoptable pet";
+  const useOriginalImages = id === "47590803";
   const images = (pet.images || [])
-    .map((image) => normalizeAdoptAPetImageUrl(image.original_url))
+    .map((image) => normalizeAdoptAPetImageUrl(image.original_url, useOriginalImages))
     .filter(Boolean);
   const video = pet.video_url ? [pet.video_url] : [];
 
