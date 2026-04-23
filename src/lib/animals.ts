@@ -159,6 +159,18 @@ function buildAnimalSlug(name: string, id: string) {
   return `${slugify(name)}-${id}`;
 }
 
+function normalizeAdoptAPetImageUrl(url: string | null | undefined) {
+  if (!url) return "";
+
+  const match = url.match(
+    /^https:\/\/media\.adoptapet\.com\/image\/upload\/.+\/([^/?#]+)$/
+  );
+
+  if (!match) return url;
+
+  return `https://media.adoptapet.com/image/upload/${match[1]}`;
+}
+
 function getAnimalIdFromSlug(slug: string) {
   const match = slug.match(/-(\d+)$/);
   return match?.[1] ?? "";
@@ -227,7 +239,7 @@ function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   const id = String(pet.pet_id || "");
   const name = pet.pet_name || "Adoptable pet";
   const images = (pet.images || [])
-    .map((image) => image.original_url || "")
+    .map((image) => normalizeAdoptAPetImageUrl(image.original_url))
     .filter(Boolean);
   const video = pet.video_url ? [pet.video_url] : [];
 

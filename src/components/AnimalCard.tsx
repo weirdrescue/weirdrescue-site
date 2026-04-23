@@ -2,9 +2,6 @@ import Image from "next/image";
 import { Animal } from "@/lib/animals";
 
 export default function AnimalCard({ animal }: { animal: Animal }) {
-  const objectPosition =
-    animal.name.toLowerCase() === "kai" ? "center 100%" : "center top";
-
   return (
     <a
       href={`/adopt/${animal.slug}`}
@@ -17,7 +14,7 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
             alt={animal.name}
             fill
             className="object-cover group-hover:scale-[1.02] transition"
-            style={{ objectPosition }}
+            style={{ objectPosition: "center top" }}
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : null}
