@@ -112,6 +112,38 @@ export default async function AdoptPage() {
           </div>
         </div>
       </section>
+
+      <section className="surface relative overflow-hidden p-7 sm:p-10">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[var(--wr-sun)]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-[var(--wr-sky)]/15 blur-3xl" />
+
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-[var(--wr-sun)]">
+              Looking for your kind of weird?
+            </p>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+              Tell us what you’re hoping to find.
+            </h2>
+            <p className="mt-3 text-white/75">
+              Sometimes you have a specific future family member in mind. Share your
+              Adoption Wish List with us, and we’ll keep an eye out for a match who feels
+              like they were meant for you.
+            </p>
+          </div>
+
+          <a
+            href="https://docs.google.com/forms/d/1_jCA3fZfSARcc9ikZDvE4-RysIxyAsVERDimIYGmfIU/edit?pli=1"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold
+                       bg-[var(--wr-sun)] text-black
+                       hover:brightness-105 active:scale-[0.98] transition shadow-md"
+          >
+            Fill out the Wish List →
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
