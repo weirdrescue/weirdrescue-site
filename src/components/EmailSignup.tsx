@@ -6,10 +6,12 @@ export default function EmailSignup({
   eyebrow = "Newsletter",
   title = "Get the good kind of inbox updates.",
   subtitle = "Adoption stories, rescue wins, and the occasional weird moment. No spam. Ever.",
+  buttonLabel = "Join newsletter",
 }: {
   eyebrow?: string;
   title?: string;
   subtitle?: string;
+  buttonLabel?: string;
 }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">(
@@ -90,7 +92,7 @@ export default function EmailSignup({
                              bg-[var(--wr-sun)] text-black hover:brightness-105 active:scale-[0.98] transition shadow-md
                              disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {status === "loading" ? "Signing up…" : "Join newsletter"}
+                  {status === "loading" ? "Signing up…" : buttonLabel}
                 </button>
               </div>
 

@@ -276,7 +276,38 @@ export default async function Home() {
       </section>
 
       <section className="mt-14">
-        <EmailSignup />
+        <EmailSignup
+          eyebrow="Email updates"
+          title="Get rescue updates in your inbox."
+          subtitle="Adoption news, events, ways to help, and the occasional weird little win. This is for email updates, not the Substack."
+          buttonLabel="Subscribe for email updates"
+        />
+      </section>
+
+      <section className="surface p-7 sm:p-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-[var(--wr-coral)]">Substack</p>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+              Want the longer stories?
+            </h2>
+            <p className="mt-3 text-white/75">
+              Subscribe to Stay Weird & Rescue for essays, behind-the-scenes rescue
+              stories, honest updates, and the feelings that don’t fit in a quick email.
+            </p>
+          </div>
+
+          <a
+            href="https://stayweirdandrescue.substack.com/subscribe"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold
+                       bg-[var(--wr-coral)] text-white
+                       hover:brightness-105 active:scale-[0.98] transition shadow-md"
+          >
+            Subscribe on Substack →
+          </a>
+        </div>
       </section>
     </div>
   );
