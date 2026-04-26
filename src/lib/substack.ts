@@ -116,3 +116,16 @@ export function formatSubstackDate(dateString: string) {
     year: "numeric",
   }).format(date);
 }
+
+export function getSubstackExcerpt(text: string, maxLength = 150) {
+  const normalized = text.replace(/\s+/g, " ").trim();
+
+  if (normalized.length <= maxLength) {
+    return normalized;
+  }
+
+  const shortened = normalized.slice(0, maxLength);
+  const lastSpace = shortened.lastIndexOf(" ");
+
+  return `${(lastSpace > 0 ? shortened.slice(0, lastSpace) : shortened).trim()}...`;
+}

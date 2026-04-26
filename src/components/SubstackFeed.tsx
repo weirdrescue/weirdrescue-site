@@ -1,4 +1,8 @@
-import { formatSubstackDate, type SubstackPost } from "@/lib/substack";
+import {
+  formatSubstackDate,
+  getSubstackExcerpt,
+  type SubstackPost,
+} from "@/lib/substack";
 
 type SubstackFeedProps = {
   posts: SubstackPost[];
@@ -58,7 +62,10 @@ export default function SubstackFeed({
               </h3>
 
               <p className="mt-3 text-sm leading-6 text-white/70">
-                {post.description || "Read the full story on Substack."}
+                {getSubstackExcerpt(
+                  post.description || "Read the full story on Substack.",
+                  140
+                )}
               </p>
 
               <p className="mt-5 text-sm font-semibold text-[var(--wr-sun)]">
