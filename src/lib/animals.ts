@@ -234,6 +234,7 @@ function mergeAnimalSummaryWithDetail(summary: Animal, detail: Animal | null): A
   return {
     ...summary,
     ...detail,
+    status: summary.status || detail.status,
     featured: summary.featured,
     shelterUrl: detail.shelterUrl || summary.shelterUrl,
   };
