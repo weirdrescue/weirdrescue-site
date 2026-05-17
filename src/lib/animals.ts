@@ -304,9 +304,12 @@ async function getLiveAnimals(): Promise<Animal[]> {
     return [];
   }
 
+  const apiKey = ADOPT_A_PET_API_KEY!;
+  const shelterId = ADOPT_A_PET_SHELTER_ID!;
+
   const response = await fetchAdoptAPet<AdoptAPetListResponse>("pets_at_shelter", {
-    key: ADOPT_A_PET_API_KEY,
-    shelter_id: ADOPT_A_PET_SHELTER_ID,
+    key: apiKey,
+    shelter_id: shelterId,
   });
 
   if (response.status !== "ok" || !response.pets?.length) {
@@ -321,8 +324,10 @@ async function getLiveAnimalById(id: string): Promise<Animal | null> {
     return null;
   }
 
+  const apiKey = ADOPT_A_PET_API_KEY!;
+
   const response = await fetchAdoptAPet<AdoptAPetDetailResponse>("pet_details", {
-    key: ADOPT_A_PET_API_KEY,
+    key: apiKey,
     pet_id: id,
   });
 
