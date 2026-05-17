@@ -70,6 +70,9 @@ const ANIMALS_DIR = path.join(process.cwd(), "content", "animals");
 const ADOPT_A_PET_API_KEY = process.env.ADOPT_A_PET_API_KEY;
 const ADOPT_A_PET_SHELTER_ID = process.env.ADOPT_A_PET_SHELTER_ID;
 const ADOPT_A_PET_API_BASE = "https://api.adoptapet.com/search";
+const HAS_ADOPT_A_PET_CONFIG = Boolean(
+  ADOPT_A_PET_API_KEY && ADOPT_A_PET_SHELTER_ID
+);
 
 function toStringArray(value: unknown): string[] {
   if (!value) return [];
@@ -256,7 +259,7 @@ function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
 }
 
 async function getLiveAnimals(): Promise<Animal[]> {
-  if (!ADOPT_A_PET_API_KEY || !ADOPT_A_PET_SHELTER_ID) {
+  if (!HAS_ADOPT_A_PET_CONFIG) {
     return [];
   }
 
@@ -273,7 +276,7 @@ async function getLiveAnimals(): Promise<Animal[]> {
 }
 
 async function getLiveAnimalById(id: string): Promise<Animal | null> {
-  if (!ADOPT_A_PET_API_KEY || !id) {
+  if (!HAS_ADOPT_A_PET_CONFIG || !id) {
     return null;
   }
 
@@ -290,17 +293,28 @@ async function getLiveAnimalById(id: string): Promise<Animal | null> {
 }
 
 export async function getAllAnimals(): Promise<Animal[]> {
-  try {
-    const liveAnimals = await getLiveAnimals();
-    if (liveAnimals.length) return liveAnimals;
-  } catch (error) {
-    console.error("Unable to load Adopt a Pet animals", error);
+  if (!HAS_ADOPT_A_PET_CONFIG) {
+    return readLocalAnimals();
   }
 
-  return readLocalAnimals();
+  try {
+    const liveAnimals = await getLiveAnimals();
+    if (liveAnimals.length) {
+      return liveAnimals;
+    }
+
+    throw new Error("Adopt a Pet returned no animals.");
+  } catch (error) {
+    console.error("Unable to load Adopt a Pet animals", error);
+    throw error;
+  }
 }
 
 export async function getAnimalBySlug(slug: string): Promise<Animal | null> {
+  if (!HAS_ADOPT_A_PET_CONFIG) {
+    return readLocalAnimals().find((animal) => animal.slug === slug) ?? null;
+  }
+
   const liveId = getAnimalIdFromSlug(slug);
 
   try {
@@ -310,7 +324,8 @@ export async function getAnimalBySlug(slug: string): Promise<Animal | null> {
     }
   } catch (error) {
     console.error("Unable to load Adopt a Pet animal details", error);
+    throw error;
   }
 
-  return readLocalAnimals().find((animal) => animal.slug === slug) ?? null;
+  return null;
 }
