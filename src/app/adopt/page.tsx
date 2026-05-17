@@ -1,6 +1,8 @@
 import AnimalCard from "@/components/AnimalCard";
 import { getAllAnimals } from "@/lib/animals";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdoptPage() {
   const animals = (await getAllAnimals()).filter(
     (a) => (a.status || "").toLowerCase() === "available"
