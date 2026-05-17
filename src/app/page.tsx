@@ -3,6 +3,8 @@ import { getAllAnimals } from "@/lib/animals";
 import AnimalCard from "@/components/AnimalCard";
 import EmailSignup from "@/components/EmailSignup";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const featured = (await getAllAnimals()).filter((a) => a.featured).slice(0, 6);
 
