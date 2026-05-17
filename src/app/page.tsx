@@ -1,12 +1,18 @@
 import Image from "next/image";
-import { getAllAnimals } from "@/lib/animals";
+import { getAllAnimals, type Animal } from "@/lib/animals";
 import AnimalCard from "@/components/AnimalCard";
 import EmailSignup from "@/components/EmailSignup";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const featured = (await getAllAnimals()).filter((a) => a.featured).slice(0, 6);
+  let featured: Animal[] = [];
+
+  try {
+    featured = (await getAllAnimals()).filter((a) => a.featured).slice(0, 6);
+  } catch (error) {
+    console.error("Unable to load homepage adoptables", error);
+  }
 
   return (
     <div className="space-y-10">
@@ -137,28 +143,69 @@ export default async function Home() {
       <div className="h-px w-full bg-white/10" />
 
       {/* FEATURED ADOPTABLES */}
-      <section className="space-y-4 pt-2">
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <h2 className="mt-1 text-2xl font-extrabold tracking-tight">
-              Meet a few of our favorites
-            </h2>
+      {featured.length ? (
+        <section className="space-y-4 pt-2">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="mt-1 text-2xl font-extrabold tracking-tight">
+                Meet a few of our favorites
+              </h2>
+            </div>
+
+            <a
+              href="/adopt"
+              className="text-sm font-semibold text-mint hover:opacity-90 transition"
+            >
+              View all →
+            </a>
           </div>
 
-          <a
-            href="/adopt"
-            className="text-sm font-semibold text-mint hover:opacity-90 transition"
-          >
-            View all →
-          </a>
-        </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featured.map((animal) => (
+              <AnimalCard key={animal.slug} animal={animal} />
+            ))}
+          </div>
+        </section>
+      ) : (
+        <section className="surface p-7 sm:p-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold text-white/70">Adoptables</p>
+              <h2 className="mt-2 text-2xl font-extrabold tracking-tight">
+                Live listings are having a weird moment.
+              </h2>
+              <p className="mt-3 text-white/75">
+                Our adoptable pets are still available on Adopt a Pet and Petfinder while
+                the feed catches up.
+              </p>
+            </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((animal) => (
-            <AnimalCard key={animal.slug} animal={animal} />
-          ))}
-        </div>
-      </section>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-[var(--wr-mint)] text-black
+                           hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              >
+                View on Adopt a Pet
+              </a>
+
+              <a
+                href="https://www.petfinder.com/member/us/ca/studio-city/weird-rescue-ca3299/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-white/10 text-white border border-white/10
+                           hover:bg-white/15 active:scale-[0.98] transition"
+              >
+                View on Petfinder
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* HOW IT WORKS */}
       <section className="surface p-7 sm:p-10">

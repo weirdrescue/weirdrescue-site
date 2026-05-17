@@ -1,12 +1,18 @@
 import AnimalCard from "@/components/AnimalCard";
-import { getAllAnimals } from "@/lib/animals";
+import { getAllAnimals, type Animal } from "@/lib/animals";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdoptPage() {
-  const animals = (await getAllAnimals()).filter(
-    (a) => (a.status || "").toLowerCase() === "available"
-  );
+  let animals: Animal[] = [];
+
+  try {
+    animals = (await getAllAnimals()).filter(
+      (a) => (a.status || "").toLowerCase() === "available"
+    );
+  } catch (error) {
+    console.error("Unable to load adopt page animals", error);
+  }
 
   return (
     <div className="space-y-10">
@@ -62,11 +68,45 @@ export default async function AdoptPage() {
           <p className="text-sm text-white/60">{animals.length} total</p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {animals.map((animal) => (
-            <AnimalCard key={animal.slug} animal={animal} />
-          ))}
-        </div>
+        {animals.length ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {animals.map((animal) => (
+              <AnimalCard key={animal.slug} animal={animal} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
+            <h3 className="text-xl font-bold">Our live adoptables feed is taking a beat.</h3>
+            <p className="mt-3 text-white/75">
+              The animals are still listed on our partner pages while we wait for Adopt a
+              Pet to respond normally again.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href="https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-[var(--wr-mint)] text-black
+                           hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              >
+                View on Adopt a Pet
+              </a>
+
+              <a
+                href="https://www.petfinder.com/member/us/ca/studio-city/weird-rescue-ca3299/"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
+                           bg-white/10 text-white border border-white/10
+                           hover:bg-white/15 active:scale-[0.98] transition"
+              >
+                View on Petfinder
+              </a>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Help strip */}
