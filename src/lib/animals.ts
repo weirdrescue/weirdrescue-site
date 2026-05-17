@@ -44,6 +44,11 @@ type AdoptAPetListPet = {
 type AdoptAPetDetailResponse = {
   status: string;
   pet?: AdoptAPetDetailPet;
+  error?: {
+    code?: number;
+    msg?: string;
+    details?: string;
+  };
 };
 
 type AdoptAPetDetailPet = {
@@ -70,6 +75,7 @@ const ANIMALS_DIR = path.join(process.cwd(), "content", "animals");
 const ADOPT_A_PET_API_KEY = process.env.ADOPT_A_PET_API_KEY;
 const ADOPT_A_PET_SHELTER_ID = process.env.ADOPT_A_PET_SHELTER_ID;
 const ADOPT_A_PET_API_BASE = "https://api.adoptapet.com/search";
+const ADOPT_A_PET_RETRY_ATTEMPTS = 3;
 const HAS_ADOPT_A_PET_CONFIG = Boolean(
   ADOPT_A_PET_API_KEY && ADOPT_A_PET_SHELTER_ID
 );
@@ -183,6 +189,10 @@ function getAnimalIdFromSlug(slug: string) {
   return match?.[1] ?? "";
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function fetchAdoptAPet<T>(pathname: string, searchParams: Record<string, string>) {
   const url = new URL(`${ADOPT_A_PET_API_BASE}/${pathname}`);
   url.searchParams.set("output", "json");
@@ -192,16 +202,47 @@ async function fetchAdoptAPet<T>(pathname: string, searchParams: Record<string, 
     url.searchParams.set(key, value);
   }
 
-  const response = await fetch(url, {
-    next: { revalidate: 900 },
-    signal: AbortSignal.timeout(8000),
-  });
+  let lastError: Error | null = null;
 
-  if (!response.ok) {
-    throw new Error(`Adopt a Pet request failed: ${response.status}`);
+  for (let attempt = 1; attempt <= ADOPT_A_PET_RETRY_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        next: { revalidate: 900 },
+        signal: AbortSignal.timeout(15000),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Adopt a Pet request failed: ${response.status}`);
+      }
+
+      const payload = (await response.json()) as T & {
+        status?: string;
+        error?: {
+          code?: number;
+          msg?: string;
+          details?: string;
+        };
+      };
+
+      if (payload.status === "fail") {
+        const message =
+          payload.error?.msg ||
+          payload.error?.details ||
+          "Adopt a Pet returned a failure payload.";
+        throw new Error(message);
+      }
+
+      return payload as T;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+
+      if (attempt < ADOPT_A_PET_RETRY_ATTEMPTS) {
+        await sleep(attempt * 750);
+      }
+    }
   }
 
-  return (await response.json()) as T;
+  throw lastError ?? new Error("Adopt a Pet request failed.");
 }
 
 function mapListAnimal(pet: AdoptAPetListPet): Animal {
