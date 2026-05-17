@@ -228,18 +228,6 @@ function mapListAnimal(pet: AdoptAPetListPet): Animal {
   };
 }
 
-function mergeAnimalSummaryWithDetail(summary: Animal, detail: Animal | null): Animal {
-  if (!detail) return summary;
-
-  return {
-    ...summary,
-    ...detail,
-    status: summary.status || detail.status,
-    featured: summary.featured,
-    shelterUrl: detail.shelterUrl || summary.shelterUrl,
-  };
-}
-
 function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   const id = String(pet.pet_id || "");
   const name = pet.pet_name || "Adoptable pet";
@@ -281,22 +269,7 @@ async function getLiveAnimals(): Promise<Animal[]> {
     return [];
   }
 
-  const summaryAnimals = response.pets.map(mapListAnimal);
-  const detailedAnimals = await Promise.all(
-    summaryAnimals.map(async (animal) => {
-      if (!animal.id) return animal;
-
-      try {
-        const detail = await getLiveAnimalById(animal.id);
-        return mergeAnimalSummaryWithDetail(animal, detail);
-      } catch (error) {
-        console.error(`Unable to load Adopt a Pet details for ${animal.name}`, error);
-        return animal;
-      }
-    })
-  );
-
-  return detailedAnimals;
+  return response.pets.map(mapListAnimal);
 }
 
 async function getLiveAnimalById(id: string): Promise<Animal | null> {
