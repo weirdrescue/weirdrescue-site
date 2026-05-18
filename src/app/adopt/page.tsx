@@ -1,31 +1,19 @@
-import AnimalCard from "@/components/AnimalCard";
-import { getAllAnimals, type Animal } from "@/lib/animals";
+const ADOPT_A_PET_WIDGET_URL =
+  "https://searchtools.adoptapet.com/cgi-bin/searchtools.cgi/portable_pet_list?shelter_id=282293&title=&color=green&clan_name=&size=450x320_list&sort_by=pet_name&hide_clan_filter_p=";
 
-export const dynamic = "force-dynamic";
-
-export default async function AdoptPage() {
-  let animals: Animal[] = [];
-
-  try {
-    animals = (await getAllAnimals()).filter(
-      (a) => (a.status || "").toLowerCase() === "available"
-    );
-  } catch (error) {
-    console.error("Unable to load adopt page animals", error);
-  }
-
+export default function AdoptPage() {
   return (
     <div className="space-y-10">
-      {/* Header */}
       <section className="surface p-7 sm:p-10">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-white/70">Adopt</p>
-            <h1 className="mt-2 text-3xl sm:text-5xl font-extrabold tracking-tight">
+            <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-5xl">
               Adoptable Weirdos
             </h1>
             <p className="mt-3 text-white/80">
-              Tap a profile for photos, details, and the latest live info from Adopt a Pet.
+              Browse our live adoptable pets right here. This list is pulled directly from
+              Adopt a Pet so it stays current even when the API is being weird.
             </p>
           </div>
 
@@ -34,9 +22,7 @@ export default async function AdoptPage() {
               href="https://www.petfinder.com/member/us/ca/studio-city/weird-rescue-ca3299/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
-                         bg-white/10 text-white border border-white/10
-                         hover:bg-white/15 active:scale-[0.98] transition"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
               View on Petfinder →
             </a>
@@ -45,9 +31,7 @@ export default async function AdoptPage() {
               href="https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold
-                         bg-white/10 text-white border border-white/10
-                         hover:bg-white/15 active:scale-[0.98] transition"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
               View rescue on Adopt a Pet →
             </a>
@@ -55,7 +39,6 @@ export default async function AdoptPage() {
         </div>
       </section>
 
-      {/* All available */}
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
           <div>
@@ -64,52 +47,25 @@ export default async function AdoptPage() {
               Everyone looking for a home
             </h2>
           </div>
-
-          <p className="text-sm text-white/60">{animals.length} total</p>
         </div>
 
-        {animals.length ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {animals.map((animal) => (
-              <AnimalCard key={animal.slug} animal={animal} />
-            ))}
+        <div className="surface overflow-hidden p-3 sm:p-5">
+          <div className="rounded-3xl border border-white/10 bg-white p-2 shadow-inner">
+            <iframe
+              src={ADOPT_A_PET_WIDGET_URL}
+              title="Weird Rescue adoptable pets"
+              className="h-[1800px] w-full rounded-2xl bg-white"
+              loading="lazy"
+            />
           </div>
-        ) : (
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8">
-            <h3 className="text-xl font-bold">Our live adoptables feed is taking a beat.</h3>
-            <p className="mt-3 text-white/75">
-              The animals are still listed on our partner pages while we wait for Adopt a
-              Pet to respond normally again.
-            </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
-                           bg-[var(--wr-mint)] text-black
-                           hover:brightness-105 active:scale-[0.98] transition shadow-md"
-              >
-                View on Adopt a Pet
-              </a>
-
-              <a
-                href="https://www.petfinder.com/member/us/ca/studio-city/weird-rescue-ca3299/"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
-                           bg-white/10 text-white border border-white/10
-                           hover:bg-white/15 active:scale-[0.98] transition"
-              >
-                View on Petfinder
-              </a>
-            </div>
-          </div>
-        )}
+          <p className="mt-4 text-sm text-white/60">
+            If the embedded list loads slowly, you can also browse our pets directly on
+            Adopt a Pet or Petfinder using the buttons above.
+          </p>
+        </div>
       </section>
 
-      {/* Help strip */}
       <section className="surface p-7 sm:p-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-2xl">
@@ -126,18 +82,14 @@ export default async function AdoptPage() {
           <div className="flex flex-wrap gap-3">
             <a
               href="/foster"
-              className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
-                         bg-[var(--wr-mint)] text-black
-                         hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              className="inline-flex items-center rounded-xl bg-[var(--wr-mint)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
             >
               Foster with us
             </a>
 
             <a
               href="/donate"
-              className="inline-flex items-center rounded-xl px-6 py-3 text-base font-semibold
-                         bg-[var(--wr-sun)] text-black
-                         hover:brightness-105 active:scale-[0.98] transition shadow-md"
+              className="inline-flex items-center rounded-xl bg-[var(--wr-sun)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
             >
               Donate
             </a>
@@ -168,9 +120,7 @@ export default async function AdoptPage() {
             href="https://docs.google.com/forms/d/1_jCA3fZfSARcc9ikZDvE4-RysIxyAsVERDimIYGmfIU/edit?pli=1"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-base font-semibold
-                       bg-[var(--wr-sun)] text-black
-                       hover:brightness-105 active:scale-[0.98] transition shadow-md"
+            className="inline-flex items-center justify-center rounded-xl bg-[var(--wr-sun)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
           >
             Fill out the Wish List →
           </a>
