@@ -328,6 +328,19 @@ function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   };
 }
 
+function mergeAnimalSummaryWithDetail(summary: Animal, detail: Animal | null): Animal {
+  if (!detail) return summary;
+
+  return {
+    ...summary,
+    ...detail,
+    status: summary.status || detail.status,
+    featured: summary.featured,
+    adoptAPetUrl: summary.adoptAPetUrl,
+    shelterUrl: detail.shelterUrl || summary.shelterUrl,
+  };
+}
+
 function parseWidgetAnimals(html: string): Animal[] {
   const rows = [...html.matchAll(/<tr(?:\s+class="[^"]*")?>([\s\S]*?)<\/tr>/gi)]
     .map((match) => match[1])
@@ -396,7 +409,23 @@ async function getWidgetAnimals(): Promise<Animal[]> {
     throw new Error("Adopt a Pet widget returned no animals.");
   }
 
-  return animals;
+  const hydratedAnimals = await Promise.all(
+    animals.map(async (animal) => {
+      if (!animal.id || animal.id.startsWith("widget-")) {
+        return animal;
+      }
+
+      try {
+        const detail = await getLiveAnimalById(animal.id);
+        return mergeAnimalSummaryWithDetail(animal, detail);
+      } catch (error) {
+        console.error(`Unable to hydrate widget animal ${animal.name}`, error);
+        return animal;
+      }
+    })
+  );
+
+  return hydratedAnimals;
 }
 
 async function getLiveAnimalById(id: string): Promise<Animal | null> {
