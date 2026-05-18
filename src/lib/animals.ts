@@ -398,7 +398,25 @@ async function getLiveAnimals(): Promise<Animal[]> {
     return [];
   }
 
-  return response.pets.map(mapListAnimal);
+  const animals = response.pets.map(mapListAnimal);
+
+  const hydratedAnimals = await Promise.all(
+    animals.map(async (animal) => {
+      if (!animal.id) {
+        return animal;
+      }
+
+      try {
+        const detail = await getLiveAnimalById(animal.id);
+        return mergeAnimalSummaryWithDetail(animal, detail);
+      } catch (error) {
+        console.error(`Unable to hydrate live animal ${animal.name}`, error);
+        return animal;
+      }
+    })
+  );
+
+  return hydratedAnimals;
 }
 
 async function getWidgetAnimals(): Promise<Animal[]> {
