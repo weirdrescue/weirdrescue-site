@@ -222,6 +222,19 @@ async function fetchAdoptAPetWidget() {
   return response.text();
 }
 
+async function fetchPublicAdoptAPetPetPage(url: string) {
+  const response = await fetch(url, {
+    next: { revalidate: 900 },
+    signal: AbortSignal.timeout(15000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Adopt a Pet pet page request failed: ${response.status}`);
+  }
+
+  return response.text();
+}
+
 async function fetchAdoptAPet<T>(pathname: string, searchParams: Record<string, string>) {
   const url = new URL(`${ADOPT_A_PET_API_BASE}/${pathname}`);
   url.searchParams.set("output", "json");
@@ -380,6 +393,11 @@ function parseWidgetAnimals(html: string): Animal[] {
   });
 }
 
+function findPublicPetPageImage(html: string) {
+  const match = html.match(/https:\/\/pet-uploads\.adoptapet\.com\/[^"'\\\s]+/i);
+  return match?.[0] ?? "";
+}
+
 async function getLiveAnimals(): Promise<Animal[]> {
   if (!HAS_ADOPT_A_PET_CONFIG) {
     return [];
@@ -437,8 +455,26 @@ async function getWidgetAnimals(): Promise<Animal[]> {
         return mergeAnimalSummaryWithDetail(animal, detail);
       } catch (error) {
         console.error(`Unable to hydrate widget animal ${animal.name}`, error);
-        return animal;
       }
+
+      if (animal.adoptAPetUrl) {
+        try {
+          const pageHtml = await fetchPublicAdoptAPetPetPage(animal.adoptAPetUrl);
+          const publicImage = findPublicPetPageImage(pageHtml);
+
+          if (publicImage) {
+            return {
+              ...animal,
+              images: [publicImage],
+              image: publicImage,
+            };
+          }
+        } catch (error) {
+          console.error(`Unable to load public pet page image for ${animal.name}`, error);
+        }
+      }
+
+      return animal;
     })
   );
 
