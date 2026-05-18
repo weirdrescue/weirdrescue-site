@@ -2,9 +2,14 @@ import Image from "next/image";
 import { Animal } from "@/lib/animals";
 
 export default function AnimalCard({ animal }: { animal: Animal }) {
+  const href = animal.adoptAPetUrl || `/adopt/${animal.slug}`;
+  const external = Boolean(animal.adoptAPetUrl);
+
   return (
     <a
-      href={`/adopt/${animal.slug}`}
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
       className="group rounded-2xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition"
     >
       <div className="relative aspect-[4/3] bg-black/10">

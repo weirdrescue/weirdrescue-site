@@ -75,6 +75,8 @@ const ANIMALS_DIR = path.join(process.cwd(), "content", "animals");
 const ADOPT_A_PET_API_KEY = process.env.ADOPT_A_PET_API_KEY;
 const ADOPT_A_PET_SHELTER_ID = process.env.ADOPT_A_PET_SHELTER_ID;
 const ADOPT_A_PET_API_BASE = "https://api.adoptapet.com/search";
+const ADOPT_A_PET_WIDGET_URL =
+  "https://searchtools.adoptapet.com/cgi-bin/searchtools.cgi/portable_pet_list?shelter_id=282293&title=&color=green&clan_name=&size=450x320_list&sort_by=pet_name&hide_clan_filter_p=";
 const ADOPT_A_PET_RETRY_ATTEMPTS = 3;
 const HAS_ADOPT_A_PET_CONFIG = Boolean(
   ADOPT_A_PET_API_KEY && ADOPT_A_PET_SHELTER_ID
@@ -144,6 +146,20 @@ function titleCase(value: string | null | undefined) {
     .join(" ");
 }
 
+function decodeHtmlEntities(value: string) {
+  return value
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&nbsp;/g, " ");
+}
+
+function stripHtml(value: string) {
+  return decodeHtmlEntities(value).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+}
+
 function normalizeSex(value: string | null | undefined) {
   if (!value) return undefined;
   const normalized = value.toLowerCase();
@@ -191,6 +207,19 @@ function getAnimalIdFromSlug(slug: string) {
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function fetchAdoptAPetWidget() {
+  const response = await fetch(ADOPT_A_PET_WIDGET_URL, {
+    next: { revalidate: 900 },
+    signal: AbortSignal.timeout(15000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Adopt a Pet widget request failed: ${response.status}`);
+  }
+
+  return response.text();
 }
 
 async function fetchAdoptAPet<T>(pathname: string, searchParams: Record<string, string>) {
@@ -299,6 +328,46 @@ function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   };
 }
 
+function parseWidgetAnimals(html: string): Animal[] {
+  const rows = [...html.matchAll(/<tr(?:\s+class="[^"]*")?>([\s\S]*?)<\/tr>/gi)]
+    .map((match) => match[1])
+    .filter((row) => row.includes("/pet/") && row.includes("<img"));
+
+  return rows.map((row, index) => {
+    const hrefMatch = row.match(/href="([^"]*\/pet\/(\d+)[^"]*)"/i);
+    const imageMatch = row.match(/<img[^>]+src="([^"]+)"/i);
+    const cellMatches = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)];
+
+    const href = hrefMatch?.[1] || "";
+    const id = hrefMatch?.[2] || `widget-${index}`;
+    const name = stripHtml(cellMatches[1]?.[1] || "Adoptable pet");
+    const breed = stripHtml(cellMatches[2]?.[1] || "");
+    const age = stripHtml(cellMatches[3]?.[1] || "");
+    const sex = stripHtml(cellMatches[4]?.[1] || "");
+    const image = imageMatch?.[1] || undefined;
+    const adoptAPetUrl = href
+      ? `https://www.adoptapet.com${decodeHtmlEntities(href)}`
+      : undefined;
+
+    return {
+      slug: buildAnimalSlug(name, id),
+      id,
+      name,
+      age: age || undefined,
+      sex: sex || undefined,
+      featured: index < 6,
+      images: image ? [image] : [],
+      image,
+      adoptAPetUrl,
+      shelterUrl: "https://www.adoptapet.com/shelter/282293-weird-rescue-studio-city-california",
+      content: breed
+        ? `${name} is a ${breed} looking for the right home.`
+        : `${name} is looking for the right home.`,
+      status: "Available",
+    } satisfies Animal;
+  });
+}
+
 async function getLiveAnimals(): Promise<Animal[]> {
   if (!HAS_ADOPT_A_PET_CONFIG) {
     return [];
@@ -317,6 +386,17 @@ async function getLiveAnimals(): Promise<Animal[]> {
   }
 
   return response.pets.map(mapListAnimal);
+}
+
+async function getWidgetAnimals(): Promise<Animal[]> {
+  const html = await fetchAdoptAPetWidget();
+  const animals = parseWidgetAnimals(html);
+
+  if (!animals.length) {
+    throw new Error("Adopt a Pet widget returned no animals.");
+  }
+
+  return animals;
 }
 
 async function getLiveAnimalById(id: string): Promise<Animal | null> {
@@ -348,12 +428,20 @@ export async function getAllAnimals(): Promise<Animal[]> {
     if (liveAnimals.length) {
       return liveAnimals;
     }
-
-    throw new Error("Adopt a Pet returned no animals.");
   } catch (error) {
     console.error("Unable to load Adopt a Pet animals", error);
-    throw error;
   }
+
+  try {
+    const widgetAnimals = await getWidgetAnimals();
+    if (widgetAnimals.length) {
+      return widgetAnimals;
+    }
+  } catch (error) {
+    console.error("Unable to load Adopt a Pet widget animals", error);
+  }
+
+  return [];
 }
 
 export async function getAnimalBySlug(slug: string): Promise<Animal | null> {
