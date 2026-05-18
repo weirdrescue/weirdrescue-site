@@ -118,6 +118,33 @@ export default function DonatePage() {
         </div>
       </section>
 
+      <section className="surface relative overflow-hidden p-8 sm:p-12">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-[var(--wr-sky)]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-[var(--wr-mint)]/15 blur-3xl" />
+
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-[var(--wr-mint)]">
+              Make it go further
+            </p>
+            <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight">
+              Your employer might match your gift.
+            </h2>
+            <p className="mt-3 text-white/75">
+              Weird Rescue is listed on Benevity and YourCause, so if your workplace has
+              a corporate giving or matching program, your donation could do double the
+              good for animals in our care. Worth a quick check with your employer.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-white/80">
+            <p className="font-semibold text-white">Matching gift platforms</p>
+            <p className="mt-2">Benevity</p>
+            <p>YourCause</p>
+          </div>
+        </div>
+      </section>
+
       {/* Wishlists */}
       <section className="surface p-8 sm:p-12">
         <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
