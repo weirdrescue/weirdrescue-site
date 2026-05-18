@@ -304,9 +304,8 @@ function mapListAnimal(pet: AdoptAPetListPet): Animal {
 function mapDetailAnimal(pet: AdoptAPetDetailPet): Animal {
   const id = String(pet.pet_id || "");
   const name = pet.pet_name || "Adoptable pet";
-  const useOriginalImages = id === "47590803";
   const images = (pet.images || [])
-    .map((image) => normalizeAdoptAPetImageUrl(image.original_url, useOriginalImages))
+    .map((image) => normalizeAdoptAPetImageUrl(image.original_url, true))
     .filter(Boolean);
   const video = pet.video_url ? [pet.video_url] : [];
 
