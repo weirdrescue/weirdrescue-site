@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "Weird Rescue",
   description:
     "A 501(c)(3) nonprofit dedicated to giving overlooked animals a second chance.",
+  icons: {
+    icon: "/brand/logo.png",
+    shortcut: "/brand/logo.png",
+    apple: "/brand/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -39,4 +44,3 @@ export default function RootLayout({
     </html>
   );
 }
-
