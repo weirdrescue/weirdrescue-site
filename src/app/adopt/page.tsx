@@ -100,6 +100,84 @@ export default async function AdoptPage() {
       </section>
 
       <section className="surface p-7 sm:p-10">
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold text-white/70">FAQ</p>
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+            A few adoption questions, answered.
+          </h2>
+          <p className="mt-3 text-white/75">
+            We like things to feel clear, supportive, and low-drama. Here’s the practical
+            stuff people usually want to know before they fall in love.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">What is the fee to adopt from Weird Rescue?</p>
+            <p className="mt-2 text-sm text-white/75">
+              Our adoption fees are $350 for adult dogs, $450 for puppies under 6 months,
+              $175 for kittens, and $150 for adult cats.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Why do you charge an adoption fee?</p>
+            <p className="mt-2 text-sm text-white/75">
+              We are entirely donation-based and do not receive federal funding, so
+              adoption fees help us keep saving lives. Between medical care, food,
+              supplies, transport, and everyday care, we almost always spend far more on
+              an animal than the adoption fee itself.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">What does the fee cover?</p>
+            <p className="mt-2 text-sm text-white/75">
+              Our animals come up to date on vaccines, are seen and cleared by a
+              veterinarian, have any known health conditions disclosed, are microchipped,
+              and are spayed or neutered or have that arranged by us. It also helps cover
+              behavioral evaluation, support, and ongoing guidance after adoption.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Where does my fee actually go?</p>
+            <p className="mt-2 text-sm text-white/75">
+              Your adoption fee does not just go to the animal you take home. It goes
+              back into the rescue so we can keep caring for the next animals who need
+              us. Some pets need only routine care, and some need surgeries, diagnostics,
+              or ongoing treatment. Adoption fees and donations help carry all of that.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">What is your adoption process?</p>
+            <p className="mt-2 text-sm text-white/75">
+              We start by reviewing your application and following up with any questions,
+              which can include things like a home walkthrough video. Then we talk
+              through what you are looking for in a furry friend and whether the animal
+              you applied for feels like the right match, or if another one might fit
+              your home better. Once we feel good about the fit, we send over our
+              adoption agreement and make space for questions so everyone is on the same
+              page. After that, we schedule a meet and greet, and if all goes well, we
+              finalize everything through Shelterluv.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p className="font-semibold">Why might a rescue fee feel higher than expected?</p>
+            <p className="mt-2 text-sm text-white/75">
+              Rescue is rarely just food and a cute photo. Fees help cover vetting,
+              vaccines, spay and neuter, microchips, foster support, transport, and the
+              more intensive medical care that some animals need before they are ever
+              ready to be adopted. In other words: your fee helps make the next rescue
+              possible too.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="surface p-7 sm:p-10">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold text-white/70">Not ready to adopt?</p>
