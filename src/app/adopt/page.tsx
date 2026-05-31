@@ -7,24 +7,24 @@ export const dynamic = "force-dynamic";
 export default async function AdoptPage() {
   const faqItems: FaqItem[] = [
     {
-      question: "What is the fee to adopt from Weird Rescue?",
+      question: "What is the adoption donation to adopt from Weird Rescue?",
       answer:
-        "Our adoption fees are $350 for adult dogs, $450 for puppies under 6 months, $175 for kittens, and $150 for adult cats.",
+        "Weird Rescue is a 501(c)(3) nonprofit, so our animals are not for sale. We do ask for an adoption donation for each animal to help offset part of their cost of care and allow us to continue future lifesaving. Our adoption donations are $350 for adult dogs, $450 for puppies under 6 months due to increased medical cost, $175 for kittens due to increased medical cost, and $150 for adult cats.",
     },
     {
-      question: "Why do you charge an adoption fee?",
+      question: "Why do you ask for an adoption donation?",
       answer:
-        "We are entirely donation-based and do not receive federal funding, so adoption fees help us keep saving lives. Between medical care, food, supplies, transport, and everyday care, we almost always spend far more on an animal than the adoption fee itself.",
+        "We are entirely donation-based and do not receive federal funding, so adoption donations help us keep saving lives. Between medical care, food, supplies, transport, and everyday care, we almost always spend far more on an animal than the adoption donation itself.",
     },
     {
-      question: "What does the fee cover?",
+      question: "What does the adoption donation cover?",
       answer:
         "Our animals come up to date on vaccines, are seen and cleared by a veterinarian, have any known health conditions disclosed, are microchipped, and are spayed or neutered or have that arranged by us. It also helps cover behavioral evaluation, support, and ongoing guidance after adoption.",
     },
     {
-      question: "Where does my fee actually go?",
+      question: "Where does my adoption donation actually go?",
       answer:
-        "Your adoption fee does not just go to the animal you take home. It goes back into the rescue so we can keep caring for the next animals who need us. Some pets need only routine care, and some need surgeries, diagnostics, or ongoing treatment. Adoption fees and donations help carry all of that.",
+        "Your adoption donation does not just go to the animal you take home. It goes back into the rescue so we can keep caring for the next animals who need us. Some pets need only routine care, and some need surgeries, diagnostics, or ongoing treatment. Adoption donations and other gifts help carry all of that.",
     },
     {
       question: "What is your adoption process?",
@@ -32,9 +32,9 @@ export default async function AdoptPage() {
         "We start by reviewing your application and following up with any questions, which can include things like a home walkthrough video. Then we talk through what you are looking for in a furry friend and whether the animal you applied for feels like the right match, or if another one might fit your home better. Once we feel good about the fit, we send over our adoption agreement and make space for questions so everyone is on the same page. After that, we schedule a meet and greet, and if all goes well, we finalize everything through Shelterluv.",
     },
     {
-      question: "Why might a rescue fee feel higher than expected?",
+      question: "Why might an adoption donation feel higher than expected?",
       answer:
-        "Rescue is rarely just food and a cute photo. Fees help cover vetting, vaccines, spay and neuter, microchips, foster support, transport, and the more intensive medical care that some animals need before they are ever ready to be adopted. In other words: your fee helps make the next rescue possible too.",
+        "Rescue is rarely just food and a cute photo. Adoption donations help cover vetting, vaccines, spay and neuter, microchips, foster support, transport, and the more intensive medical care that some animals need before they are ever ready to be adopted. In other words: your adoption donation helps make the next rescue possible too.",
     },
   ];
 
