@@ -105,14 +105,25 @@ export default async function AdoptPage() {
             </p>
           </div>
 
-          <a
-            href="https://new.shelterluv.com/matchme/adopt/WRD/Dog"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-xl bg-[var(--wr-mint)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
-          >
-            Start the application →
-          </a>
+          <div className="flex flex-col gap-3 sm:items-end">
+            <a
+              href="https://new.shelterluv.com/matchme/adopt/WRD/Dog"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-xl bg-[var(--wr-mint)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
+            >
+              Dog application →
+            </a>
+
+            <a
+              href="https://new.shelterluv.com/matchme/adopt/WRD/Cat"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/10 px-6 py-3 text-base font-semibold text-white transition hover:bg-white/15 active:scale-[0.98]"
+            >
+              Cat application →
+            </a>
+          </div>
         </div>
       </section>
 
