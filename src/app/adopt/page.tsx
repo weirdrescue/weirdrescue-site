@@ -84,6 +84,38 @@ export default async function AdoptPage() {
         </div>
       </section>
 
+      <section className="surface relative overflow-hidden p-7 sm:p-10">
+        <div className="pointer-events-none absolute -left-12 top-6 h-40 w-40 rounded-full bg-[var(--wr-mint)]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-12 bottom-0 h-44 w-44 rounded-full bg-[var(--wr-sky)]/15 blur-3xl" />
+
+        <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold text-[var(--wr-mint)]">
+              Not sure which weirdo is your weirdo?
+            </p>
+            <h2 className="mt-2 text-3xl font-extrabold tracking-tight">
+              Get pre-approved and let us help with the match.
+            </h2>
+            <p className="mt-3 text-white/75">
+              If you are still figuring out who feels like the right fit, or if we have
+              an adoption event coming up and you want to be ready, fill out the general
+              application first. Once you apply, our adoption coordinators can chat with
+              you about who might be the best match, and pre-approved adopters can move a
+              little faster at events.
+            </p>
+          </div>
+
+          <a
+            href="https://new.shelterluv.com/matchme/adopt/WRD/Dog"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center rounded-xl bg-[var(--wr-mint)] px-6 py-3 text-base font-semibold text-black shadow-md transition hover:brightness-105 active:scale-[0.98]"
+          >
+            Start the application →
+          </a>
+        </div>
+      </section>
+
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
           <div>
