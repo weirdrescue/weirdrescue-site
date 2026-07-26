@@ -2,6 +2,8 @@ import Image from "next/image";
 import SubstackFeed from "@/components/SubstackFeed";
 import { getLatestSubstackPosts } from "@/lib/substack";
 
+export const dynamic = "force-dynamic";
+
 export default async function NewsletterPage() {
   const posts = await getLatestSubstackPosts();
   const featuredPost = posts[0];
