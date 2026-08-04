@@ -125,7 +125,6 @@ export default async function Home() {
     </div>
 
     </div>
-  </div>
 
   {/* subtle modern accent glow */}
   <div className="pointer-events-none absolute -inset-6 -z-10 blur-3xl opacity-30">
