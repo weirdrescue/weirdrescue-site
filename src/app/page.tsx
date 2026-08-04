@@ -30,7 +30,7 @@ export default async function Home() {
             </h1>
 
             <p className="mt-5 text-lg sm:text-xl text-white/80">
-              We save overlooked dogs and cats and match them with the right humans — with
+              We save overlooked dogs, cats, and other fun weirdos and match them with the right humans — with
               great care, honest support, and a little chaos (the cute kind).
             </p>
 
