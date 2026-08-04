@@ -92,8 +92,8 @@ export default async function Home() {
       {/* Large tile (top-left) */}
       <div className="col-span-2 sm:col-span-1 sm:row-span-2 relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl">
         <Image
-          src="/animals/gemma/gemma-teal.jpg"
-          alt="Gemma adoptable dog"
+          src="/animals/marciano.png"
+          alt="Marciano adoptable dog"
           width={1200}
           height={1500}
           className="h-[420px] w-full object-cover sm:h-[520px]"
@@ -104,8 +104,8 @@ export default async function Home() {
       {/* Top-right */}
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-xl">
         <Image
-          src="/animals/gemma/gemma-bubbles.jpg"
-          alt="Gemma with bubbles"
+          src="/animals/miso.png"
+          alt="Miso adoptable kitten"
           width={900}
           height={900}
           className="h-48 w-full object-cover sm:h-[250px]"
@@ -124,10 +124,6 @@ export default async function Home() {
       </div>
     </div>
 
-    {/* Caption / credit line */}
-    <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/60">
-      <span className="font-semibold text-white/70">Gemma • Featured foster</span>
-      <span>Photos: Dogtographer Sarah DeRemer</span>
     </div>
   </div>
 
